@@ -8,18 +8,57 @@ import platform
 import argparse
 import json
 
+# define local scope variables
+# directory names as strings
 dir_repos = "repositories"
 dir_extensions = "extensions"
+# path to python binary
 python = sys.executable
+# GIT or git environment variable
 git = os.environ.get('GIT', "git")
+# INDEX_URL or empty string environment variable
+# empty string will return None
 index_url = os.environ.get('INDEX_URL', "")
 
 
 def extract_arg(args, name):
+    '''
+    Arguments:
+        - args: sequence of strings
+        - name: single string
+
+    Return Values:
+    - [x for x in args if x != name]: list of args that are not name.
+    - True/False: True if name in args, otherwise False.
+    '''
+
     return [x for x in args if x != name], name in args
 
 
 def extract_opt(args, name):
+    '''
+    Arguments:
+        - args: sequence of strings
+        - name: single string
+
+    Logic:
+        - Set default values for opt and is_present.
+        - If name is in args:
+            - Change is_present to True.
+            - Find first index of name, then delete it.
+            - If the index of name is less than the length of args and the
+              first character in the element after our original name is not
+              "-':
+                - Set opt to the element after name in args.
+                - Delete the element after name in args.
+
+    Return Values:    
+        - args: sequence of strings
+        - is_present: True if name in args, otherwise False.
+        - opt: a string or None
+    
+    '''
+    
     opt = None
     is_present = False
     if name in args:
@@ -33,6 +72,20 @@ def extract_opt(args, name):
 
 
 def run(command, desc=None, errdesc=None, custom_env=None):
+    '''
+    Arguments:
+        - command:
+        - desc:
+        - errdesc: 
+        - custom_env: 
+
+    Logic:
+        - 
+
+    Return Values:
+        - result.stdout.decode(): 
+    '''
+    
     if desc is not None:
         print(desc)
 
